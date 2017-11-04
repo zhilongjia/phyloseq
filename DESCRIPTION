@@ -1,6 +1,6 @@
 Package: phyloseq
-Version: 1.22.0
-Date: 2016-12-29
+Version: 1.22.1
+Date: 2017-11-04
 Title: Handling and analysis of high-throughput microbiome
     census data
 Description: phyloseq provides a set of classes and tools
@@ -14,7 +14,7 @@ License: AGPL-3
 Imports:
     BiocGenerics (>= 0.18.0),
     ade4 (>= 1.7.4),
-    ape (>= 3.4),
+    ape (>= 5.0),
     biomformat (>= 1.0.0),
     Biostrings (>= 2.40.0),
     cluster (>= 2.0.4),
@@ -30,7 +30,7 @@ Imports:
     vegan (>= 2.3.5),
     Biobase
 Depends:
-    R (>= 3.3.0)
+    R (>= 3.4.0)
 Suggests:
     BiocStyle (>= 2.0.0),
     DESeq2 (>= 1.12.0),
