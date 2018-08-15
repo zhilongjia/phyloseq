@@ -846,7 +846,8 @@ plot_richness = function(physeq, x="samples", color=NULL, shape=NULL, title=NULL
 #' @param label (Optional). Default \code{NULL}. Character string.
 #'  The name of the variable to map to text labels on the plot.
 #'  Similar to \code{color} option, but for plotting text.
-#'
+#' @param dotsize default 2
+#' @param cbPalette default NULL.
 #' @param title (Optional). Default \code{NULL}. Character string.
 #'  The main title for the graphic.
 #'
@@ -889,8 +890,9 @@ plot_richness = function(physeq, x="samples", color=NULL, shape=NULL, title=NULL
 #' GP = prune_taxa(names(sort(taxa_sums(GlobalPatterns), TRUE)[1:50]), GlobalPatterns)
 #' gp_bray_pcoa = ordinate(GP, "CCA", "bray")
 #' plot_ordination(GP, gp_bray_pcoa, "samples", color="SampleType")
-plot_ordination = function(physeq, ordination, type="samples", axes=1:2,
-                            color=NULL, shape=NULL, label=NULL, title=NULL, justDF=FALSE){
+plot_ordination = function(physeq, ordination, type="samples", axes=1:2, dotsize=3,
+                            color=NULL, shape=NULL, label=NULL, title=NULL,
+                           cbPalette=NULL, justDF=FALSE){
   if(length(type) > 1){
     warning("`type` can only be a single option,
             but more than one provided. Using only the first.")
@@ -1113,7 +1115,12 @@ plot_ordination = function(physeq, ordination, type="samples", axes=1:2,
     }
   }
   # Plot-building section
-  p <- ggplot(DF, ord_map) + geom_point(na.rm=TRUE)
+  p <- ggplot(DF, ord_map) + geom_point(na.rm=TRUE, size=dotsize)
+  
+  if (!is.null(cbPalette) ) {
+      p <- p + scale_colour_manual(values=cbPalette)
+  }
+  
   # split/facet color and shape can be anything in one or other.
   if( type=="split" ){
     # split-option requires a facet_wrap
