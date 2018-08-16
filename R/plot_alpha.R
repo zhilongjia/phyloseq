@@ -1,5 +1,5 @@
 ################################################################################
-#' Plot alpha diversity in boxplot, flexibly with ggplot2
+#' Plot alpha diversity, flexibly with ggplot2
 #'
 #' There are many useful examples of alpha-diversity graphics in the
 #' \href{http://joey711.github.io/phyloseq/plot_richness-examples}{phyloseq online tutorials}.
@@ -96,6 +96,7 @@
 #'  
 #'  @param comparisons default NULL. example list( c("Up", "Down"), c("Up", "All") )
 #'  @param stat.method wilcox.test or t.test
+#'  @plottype violin or boxplot
 #'
 #' @return A \code{\link{ggplot}} plot object summarizing
 #'  the richness estimates, and their standard error.
@@ -118,7 +119,7 @@
 #' @importFrom ggplot2 geom_errorbar
 #' @importFrom ggplot2 facet_wrap
 #' @importFrom ggplot2 element_text
-#' @importFrom ggpubr ggboxplot stat_compare_means
+#' @importFrom ggpubr ggboxplot stat_compare_means ggviolin
 #' 
 #' @export
 #' @examples 
@@ -131,9 +132,10 @@
 #' plot_alpha_boxplot(GlobalPatterns, x="SampleType", measures=c("Chao1", "ACE", "InvSimpson"), nrow=3)
 #' plot_alpha_boxplot(GlobalPatterns, x="SampleType", measures=c("Chao1", "ACE", "InvSimpson"), nrow=3, sortby = "Chao1")
 
-plot_alpha_boxplot = function(physeq, x="samples", color=NULL, shape=NULL, title=NULL,
+plot_alpha = function(physeq, x="samples", color=NULL, shape=NULL, title=NULL,
                          scales="free_y", nrow=1, measures=NULL, sortby=NULL, 
-                         comparisons=NULL, stat.method="wilcox.test"){ 
+                         comparisons=NULL, stat.method="wilcox.test",
+                      plottype="violin"){ 
     # Calculate the relevant alpha-diversity measures
     erDF = estimate_richness(physeq, split=TRUE, measures=measures)
     # Measures may have been renamed in `erDF`. Replace it with the name from erDF
@@ -220,10 +222,15 @@ plot_alpha_boxplot = function(physeq, x="samples", color=NULL, shape=NULL, title
     # Define variable mapping
     richness_map = aes_string(x=x, y="value", colour=color, shape=shape)
     # Make the ggplot.
-    # # Scale maximum width proportional to sample size (scale = "count").
-    p = ggpubr::ggboxplot(mdf, x=x, y="value", fill=x)
+    if (plottype=="boxplot") {
+        p = ggpubr::ggboxplot(mdf, x=x, y="value", fill=x)
+    } else if (plottype=="violin") {
+        p = ggpubr::ggviolin(mdf, x=x, y="value", fill=x, scale = "count", 
+                             draw_quantiles = c(0.25, 0.5, 0.75) ) 
+    }
     
     if (!is.null(comparisons) ) {
+        # http://www.sthda.com/english/articles/24-ggpubr-publication-ready-plots/76-add-p-values-and-significance-levels-to-ggplots/
         p <- p + ggpubr::stat_compare_means( comparisons=comparisons, method = stat.method)
     }
     

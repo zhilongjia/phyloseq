@@ -73,6 +73,6 @@ Collate:
     'extend_DESeq2.R'
     'phylo-class.R'
     'extend_metagenomeSeq.R'
-    'plot_alpha_boxplot.R'
+    'plot_alpha.R'
     'plot_alpha_violin.R'
 RoxygenNote: 6.0.1
