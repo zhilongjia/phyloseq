@@ -107,11 +107,11 @@
 #' @export
 #'
 #' @examples
-#' # Test with esophagus dataset
-#' data("esophagus")
-#' esorepT = rarefy_even_depth(esophagus, replace=TRUE)
-#' esorepF = rarefy_even_depth(esophagus, replace=FALSE)
-#' sample_sums(esophagus)
+#' # Test with GlobalPatterns dataset
+#' data("GlobalPatterns")
+#' esorepT = rarefy_even_depth(GlobalPatterns, replace=TRUE)
+#' esorepF = rarefy_even_depth(GlobalPatterns, replace=FALSE)
+#' sample_sums(GlobalPatterns)
 #' sample_sums(esorepT)
 #' sample_sums(esorepF)
 #' ## NRun Manually: Too slow!
@@ -181,6 +181,9 @@ rarefy_even_depth <- function(physeq, sample.size=min(sample_sums(physeq)),
     # 1. Notify user of empty OTUs being cut.
     # 2. Cut empty OTUs
     rmtaxa = taxa_names(newsub)[taxa_sums(newsub) <= 0]
+    # rmtaxa2 = taxa_names(newsub)[which(taxa_sums(newsub) <= 0)]
+    # rmtaxa3 = taxa_names(newsub)[which(taxa_sums_old(newsub) <= 0)]
+    # rmtaxa4 = taxa_names(newsub)[taxa_sums_old(newsub) <= 0]
     if( length(rmtaxa) > 0 ){
       if(verbose){
         message(length(rmtaxa), "OTUs were removed because they are no longer \n",
@@ -297,11 +300,11 @@ rarefaction_subsample <- function(x, sample.size, replace=FALSE){
 #' @export
 #'
 #' @examples 
-#' data("esophagus")
+#' data("GlobalPatterns")
 #' # for speed
-#' esophagus = prune_taxa(taxa_names(esophagus)[1:25], esophagus)
-#' plot_tree(esophagus, label.tips="taxa_names", size="abundance", title="Before tip_glom()")
-#' plot_tree(tip_glom(esophagus, h=0.2), label.tips="taxa_names", size="abundance", title="After tip_glom()")
+#' GlobalPatterns = prune_taxa(taxa_names(GlobalPatterns)[1:25], GlobalPatterns)
+#' plot_tree(GlobalPatterns, label.tips="taxa_names", size="abundance", title="Before tip_glom()")
+#' plot_tree(tip_glom(GlobalPatterns, h=0.2), label.tips="taxa_names", size="abundance", title="After tip_glom()")
 tip_glom = function(physeq, h=0.2, hcfun=agnes, ...){
   dd = as.dist(cophenetic.phylo(phy_tree(physeq)))
   psclust = cutree(as.hclust(hcfun(dd, ...)), h=h)
@@ -465,11 +468,11 @@ tax_glom <- function(physeq, taxrank=rank_names(physeq)[1],
 #' @rdname prune_taxa-methods
 #' @export
 #' @examples
-#' data("esophagus")
-#' esophagus
-#' plot(sort(taxa_sums(esophagus), TRUE), type="h", ylim=c(0, 50))
-#' x1 = prune_taxa(taxa_sums(esophagus) > 10, esophagus) 
-#' x2 = prune_taxa(names(sort(taxa_sums(esophagus), TRUE))[1:9], esophagus) 
+#' data("GlobalPatterns")
+#' GlobalPatterns
+#' plot(sort(taxa_sums(GlobalPatterns), TRUE), type="h", ylim=c(0, 50))
+#' x1 = prune_taxa(taxa_sums(GlobalPatterns) > 10, GlobalPatterns) 
+#' x2 = prune_taxa(names(sort(taxa_sums(GlobalPatterns), TRUE))[1:9], GlobalPatterns) 
 #' identical(x1, x2)
 setGeneric("prune_taxa", function(taxa, x) standardGeneric("prune_taxa"))
 #' @aliases prune_taxa,NULL,ANY-method
@@ -502,6 +505,8 @@ setMethod("prune_taxa", signature("character", "phylo"), function(taxa, x){
 	} else if( setequal(taxa, taxa_names(x)) ){
 		return(x)
 	} else {
+	    
+	    # todo: taxa support all rank_names()
 		return( drop.tip(x, setdiff(taxa_names(x), taxa)) )		
 	}
 })
@@ -719,10 +724,10 @@ threshrank <- function(x, thresh, keep0s=FALSE, ...){
 #'  \code{\link{threshrank}}
 #' @export
 #' @examples
-#' data(esophagus)
-#' x1 = transform_sample_counts(esophagus, threshrankfun(50))
+#' data(GlobalPatterns)
+#' x1 = transform_sample_counts(GlobalPatterns, threshrankfun(50))
 #' otu_table(x1)
-#' x2 = transform_sample_counts(esophagus, rank)
+#' x2 = transform_sample_counts(GlobalPatterns, rank)
 #' otu_table(x2)
 #' identical(x1, x2)
 threshrankfun <- function(thresh, keep0s=FALSE, ...){
@@ -801,16 +806,16 @@ setMethod("t", signature("phyloseq"), function(x){
 #' @export
 #'
 #' @examples #
-#' data(esophagus)
-#' x1 = transform_sample_counts(esophagus, threshrankfun(50))
+#' data(GlobalPatterns)
+#' x1 = transform_sample_counts(GlobalPatterns, threshrankfun(50))
 #' head(otu_table(x1), 10)
-#' x2 = transform_sample_counts(esophagus, rank)
+#' x2 = transform_sample_counts(GlobalPatterns, rank)
 #' head(otu_table(x2), 10)
 #' identical(x1, x2)
-#' x3 = otu_table(esophagus) + 5
+#' x3 = otu_table(GlobalPatterns) + 5
 #' x3 = transform_sample_counts(x3, log)
 #' head(otu_table(x3), 10)
-#' x4 = transform_sample_counts(esophagus, function(x) round(x^2.2, 0))
+#' x4 = transform_sample_counts(GlobalPatterns, function(x) round(x^2.2, 0))
 #' head(otu_table(x4), 10)
 transform_sample_counts <- function(physeq, fun, ...){
 	# Test the user-provided function returns a vector of the same length as input.

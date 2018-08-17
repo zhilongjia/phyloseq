@@ -38,16 +38,16 @@ interaction/comparison is possible by this method.
 }
 \examples{
 #
-data(esophagus)
-x1 = transform_sample_counts(esophagus, threshrankfun(50))
+data(GlobalPatterns)
+x1 = transform_sample_counts(GlobalPatterns, threshrankfun(50))
 head(otu_table(x1), 10)
-x2 = transform_sample_counts(esophagus, rank)
+x2 = transform_sample_counts(GlobalPatterns, rank)
 head(otu_table(x2), 10)
 identical(x1, x2)
-x3 = otu_table(esophagus) + 5
+x3 = otu_table(GlobalPatterns) + 5
 x3 = transform_sample_counts(x3, log)
 head(otu_table(x3), 10)
-x4 = transform_sample_counts(esophagus, function(x) round(x^2.2, 0))
+x4 = transform_sample_counts(GlobalPatterns, function(x) round(x^2.2, 0))
 head(otu_table(x4), 10)
 }
 \seealso{

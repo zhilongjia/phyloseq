@@ -57,14 +57,6 @@ will sometimes look non-Euclidean, and a correction will be performed.
 See \code{correction} argument.
 }
 \examples{
-# # # # # # Esophagus
-data(esophagus)
-eso.dpcoa <- DPCoA(esophagus)
-eso.dpcoa
-plot_ordination(esophagus, eso.dpcoa, "samples")
-plot_ordination(esophagus, eso.dpcoa, "species")
-plot_ordination(esophagus, eso.dpcoa, "biplot")
-#
 #
 # # # # # # GlobalPatterns
 data(GlobalPatterns)

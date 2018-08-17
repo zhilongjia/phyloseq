@@ -94,9 +94,9 @@
 #'  Default is \code{NULL}, implying that a discrete-value horizontal axis
 #'  will use default sorting, usually alphabetic.
 #'  
-#'  @param comparisons default NULL. example list( c("Up", "Down"), c("Up", "All") )
-#'  @param stat.method wilcox.test or t.test
-#'  @plottype violin or boxplot
+#' @param comparisons default NULL. example list( c("Up", "Down"), c("Up", "All") )
+#' @param stat.method wilcox.test or t.test
+#' @param plottype violin or boxplot
 #'
 #' @return A \code{\link{ggplot}} plot object summarizing
 #'  the richness estimates, and their standard error.
@@ -119,18 +119,17 @@
 #' @importFrom ggplot2 geom_errorbar
 #' @importFrom ggplot2 facet_wrap
 #' @importFrom ggplot2 element_text
-#' @importFrom ggpubr ggboxplot stat_compare_means ggviolin
 #' 
 #' @export
 #' @examples 
 #' ## There are many more interesting examples at the phyloseq online tutorials.
 #' ## http://joey711.github.io/phyloseq/plot_richness-examples
 #' data("soilrep")
-#' plot_alpha_boxplot(soilrep, "Treatment", "warmed", measures=c("Chao1", "ACE", "InvSimpson"), nrow=3)
+#' plot_alpha(soilrep, "Treatment", "warmed", measures=c("Chao1", "ACE", "InvSimpson"), nrow=3)
 #' data("GlobalPatterns")
-#' plot_alpha_boxplot(GlobalPatterns, x="SampleType", measures=c("InvSimpson"))
-#' plot_alpha_boxplot(GlobalPatterns, x="SampleType", measures=c("Chao1", "ACE", "InvSimpson"), nrow=3)
-#' plot_alpha_boxplot(GlobalPatterns, x="SampleType", measures=c("Chao1", "ACE", "InvSimpson"), nrow=3, sortby = "Chao1")
+#' plot_alpha(GlobalPatterns, x="SampleType", measures=c("InvSimpson"))
+#' plot_alpha(GlobalPatterns, x="SampleType", measures=c("Chao1", "ACE", "InvSimpson"), nrow=3)
+#' plot_alpha(GlobalPatterns, x="SampleType", measures=c("Chao1", "ACE", "InvSimpson"), nrow=3, sortby = "Chao1")
 
 plot_alpha = function(physeq, x="samples", color=NULL, shape=NULL, title=NULL,
                          scales="free_y", nrow=1, measures=NULL, sortby=NULL, 

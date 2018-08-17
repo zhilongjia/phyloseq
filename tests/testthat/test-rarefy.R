@@ -10,10 +10,14 @@ data("GlobalPatterns")
 set.seed(711) # The random seed for randomly selecting subset of OTUs
 randoOTUs = sample(taxa_names(GlobalPatterns), 100, FALSE)
 GP100 = prune_taxa(randoOTUs, GlobalPatterns)
+
 min_lib = 1000
 # The default rng seed is being implied in this call (also 711)
 rGP  = suppressMessages(rarefy_even_depth(GP100, sample.size=min_lib, rngseed=FALSE))
 rGPr = suppressMessages(rarefy_even_depth(GP100, sample.size=min_lib, rngseed=FALSE, replace=FALSE))
+sample_sums(rGP)
+sample_sums(rGPr)
+
 ################################################################################
 # Test that specific OTUs and samples were removed
 ################################################################################
@@ -40,12 +44,12 @@ test_that("Test values", {
 							 c(710, 2, 0, 2, 0, 8, 154, 2, 0))
 	# without replacement values
 	expect_equal(as(otu_table(rGPr)[1, 3:10], "vector"), c(rep(0, 7), 1))
-	expect_equal(as(otu_table(rGPr)[2, 1:10], "vector"), 
+	expect_equal(as(otu_table(rGPr)[2, 1:10], "vector"),
                c(rep(0, 5), 4, 0, 877, 960, 55))
-	expect_equal(as(otu_table(rGPr)[3, 8:12], "vector"), 
+	expect_equal(as(otu_table(rGPr)[3, 8:12], "vector"),
                c(10, 34, 2, 0, 2))
 	expect_equal(as(otu_table(rGPr)[70:78, 4], "vector"),
-	             c(0, 706, 1, 0, 2, 0, 5, 173, 1))  
+	             c(0, 706, 1, 0, 2, 0, 5, 173, 1))
 })
 ################################################################################
 # Include tests from the rarefy-without-replacement results, used by many.

@@ -50,11 +50,11 @@ in particular, complete-linkage clustering appears to be used more commonly for 
 clustering applications.
 }
 \examples{
-data("esophagus")
+data("GlobalPatterns")
 # for speed
-esophagus = prune_taxa(taxa_names(esophagus)[1:25], esophagus)
-plot_tree(esophagus, label.tips="taxa_names", size="abundance", title="Before tip_glom()")
-plot_tree(tip_glom(esophagus, h=0.2), label.tips="taxa_names", size="abundance", title="After tip_glom()")
+GlobalPatterns = prune_taxa(taxa_names(GlobalPatterns)[1:25], GlobalPatterns)
+plot_tree(GlobalPatterns, label.tips="taxa_names", size="abundance", title="Before tip_glom()")
+plot_tree(tip_glom(GlobalPatterns, h=0.2), label.tips="taxa_names", size="abundance", title="After tip_glom()")
 }
 \seealso{
 \code{\link{merge_taxa}}

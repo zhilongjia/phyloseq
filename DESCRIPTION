@@ -75,4 +75,5 @@ Collate:
     'extend_metagenomeSeq.R'
     'plot_alpha.R'
     'plot_alpha_violin.R'
+    'ranknames2taxanames.R'
 RoxygenNote: 6.0.1

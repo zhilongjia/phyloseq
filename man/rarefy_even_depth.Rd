@@ -105,11 +105,11 @@ Make sure to use \code{\link{set.seed}} for exactly-reproducible results
 of the random subsampling.
 }
 \examples{
-# Test with esophagus dataset
-data("esophagus")
-esorepT = rarefy_even_depth(esophagus, replace=TRUE)
-esorepF = rarefy_even_depth(esophagus, replace=FALSE)
-sample_sums(esophagus)
+# Test with GlobalPatterns dataset
+data("GlobalPatterns")
+esorepT = rarefy_even_depth(GlobalPatterns, replace=TRUE)
+esorepF = rarefy_even_depth(GlobalPatterns, replace=FALSE)
+sample_sums(GlobalPatterns)
 sample_sums(esorepT)
 sample_sums(esorepF)
 ## NRun Manually: Too slow!

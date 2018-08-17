@@ -1566,7 +1566,7 @@ psmelt = function(physeq){
 #' an experiment. 
 #'
 #' @usage plot_bar(physeq, x="Sample", y="Abundance", fill=NULL,
-#'  title=NULL, facet_grid=NULL)
+#'  title=NULL, facet_grid=NULL, groupMean=FALSE, position="stack", font_size=12)
 #'
 #' @param physeq (Required). An \code{\link{otu_table-class}} or 
 #'  \code{\link{phyloseq-class}}.
@@ -1599,9 +1599,10 @@ psmelt = function(physeq){
 #' @param title (Optional). Default \code{NULL}. Character string.
 #'  The main title for the graphic.
 #'  
-#'  @param groupMean FALSE or TRUE
-#'  @param position stack or dodge
-#'  @param font_size default 12.
+#' @param groupMean FALSE or TRUE
+#' @param position stack or dodge
+#' @param font_size default 12.
+#'
 #'
 #' @return A \code{\link[ggplot2]{ggplot}}2 graphic object -- rendered in the graphical device
 #'  as the default \code{\link[base]{print}}/\code{\link[methods]{show}} method.
@@ -1620,8 +1621,6 @@ psmelt = function(physeq){
 #' @importFrom ggplot2 geom_bar
 #' @importFrom ggplot2 facet_grid
 #' @importFrom ggplot2 element_text
-#' @importFrom dplyr group_by_ summarise
-#' @importFrom magrittr %>%
 #' 
 #' @export
 #'
@@ -2844,8 +2843,8 @@ chunkReOrder = function(x, newstart = x[[1]]){
 #' 
 #' @examples
 #' # Load and process data
-#' data("soilrep")
-#' soilr = rarefy_even_depth(soilrep, rngseed=888)
+#' data("GlobalPatterns")
+#' soilr = rarefy_even_depth(GlobalPatterns, rngseed=888)
 #' print(soilr)
 #' sample_variables(soilr)
 #' # Ordination

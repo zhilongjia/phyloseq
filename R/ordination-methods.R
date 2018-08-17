@@ -304,14 +304,6 @@ ordinate = function(physeq, method="DCA", distance="bray", formula=NULL, ...){
 #' Journal of Theoretical Biology, 228, 523-537.
 #' 
 #' @examples
-#' # # # # # # Esophagus
-#' data(esophagus)
-#' eso.dpcoa <- DPCoA(esophagus)
-#' eso.dpcoa
-#' plot_ordination(esophagus, eso.dpcoa, "samples")
-#' plot_ordination(esophagus, eso.dpcoa, "species")
-#' plot_ordination(esophagus, eso.dpcoa, "biplot")
-#' #
 #' #
 #' # # # # # # GlobalPatterns
 #' data(GlobalPatterns)

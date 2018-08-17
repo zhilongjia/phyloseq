@@ -5,7 +5,7 @@
 \title{A flexible, informative barplot phyloseq data}
 \usage{
 plot_bar(physeq, x="Sample", y="Abundance", fill=NULL,
- title=NULL, facet_grid=NULL)
+ title=NULL, facet_grid=NULL, groupMean=FALSE, position="stack", font_size=12)
 }
 \arguments{
 \item{physeq}{(Required). An \code{\link{otu_table-class}} or 
@@ -38,6 +38,12 @@ It should describe the faceting you want in exactly the same way as for
 \code{\link[ggplot2]{facet_grid}}, 
 and is ulitmately provided to \code{\link{ggplot}}2 graphics.
 The default is: \code{NULL}, resulting in no faceting.}
+
+\item{groupMean}{FALSE or TRUE}
+
+\item{position}{stack or dodge}
+
+\item{font_size}{default 12.}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}}2 graphic object -- rendered in the graphical device
@@ -61,6 +67,7 @@ plot_bar(gp.ch, fill="Genus")
 plot_bar(gp.ch, x="SampleType", fill="Genus")
 plot_bar(gp.ch, "SampleType", fill="Genus", facet_grid=~Family)
 # See additional examples in the plot_bar online tutorial. Link above.
+
 }
 \seealso{
 \href{http://joey711.github.io/phyloseq/plot_bar-examples}{phyloseq online tutorials}.

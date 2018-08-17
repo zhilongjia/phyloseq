@@ -89,29 +89,57 @@ setMethod("otu_table", "ANY", function(object, errorIfNULL=TRUE){
 #' A convenience function equivalent to rowSums or colSums, but where
 #' the orientation of the otu_table is automatically handled.
 #'
-#' @usage taxa_sums(x)
+#' @usage taxa_sums(x, rankby="rowname")
 #'
 #' @param x \code{\link{otu_table-class}}, or \code{\link{phyloseq-class}}.
+#' @param rankby rowname (default) or one of rank_names(x)
 #' 
 #' @return A \code{\link{numeric-class}} with length equal to the number of species
 #'  in the table, name indicated the taxa ID, and value equal to the sum of
 #'  all individuals observed for each taxa in \code{x}.
-#'
+#'  
 #' @seealso \code{\link{sample_sums}}, \code{\link{rowSums}}, \code{\link{colSums}}
 #' @export
 #' @examples
 #' data(enterotype)
-#' taxa_sums(enterotype)
-#' data(esophagus)
-#' taxa_sums(esophagus)
-taxa_sums <- function(x){
-	x <- otu_table(x)
-	if( taxa_are_rows(x) ){
-		rowSums(x)
-	} else {
-		colSums(x)
-	}
+#' head(taxa_sums(enterotype))
+taxa_sums <- function(x, rankby="rowname"){
+    
+    if (class(x) == "otu_table") {
+        x <- otu_table(x)
+        if( taxa_are_rows(x) ){
+            res <- rowSums(x)
+        } else {
+            res <- colSums(x)
+        }
+    } else if ( class(x) == "phyloseq" ) {
+        rankby <- match.arg(rankby, c("rowname", rank_names(x) ) ) 
+        
+        x_otu <- otu_table(x)@.Data
+        x_taxa <- tax_table(x)@.Data
+        
+        if (!taxa_are_rows(x) ) {
+            x_otu <- t(x_otu)
+        }
+        
+        x_otutab_raw <- dplyr::right_join(tibble::rownames_to_column(as.data.frame(x_taxa)), 
+                                          tibble::rownames_to_column(as.data.frame(x_otu)) )
+        x_otutab_raw <- dplyr::summarise_at(dplyr::group_by_(x_otutab_raw, rankby), sample_names(x), sum)
+        
+        x_otutab <- as.matrix(x_otutab_raw[,!(colnames(x_otutab_raw) %in% rankby) ])
+        rownames(x_otutab) <- as.character(x_otutab_raw[[rankby]])
+        
+        # take care of the order of names!!!
+        if (rankby=="rowname") {
+            res <- rowSums(x_otutab)[taxa_names(x)]
+        } else {
+            res <- rowSums(x_otutab)
+        }
+    }
+    return (res)
+    
 }
+
 ################################################################################
 #' Returns the total number of individuals observed from each sample.
 #' 

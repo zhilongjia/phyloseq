@@ -115,6 +115,8 @@
 #' @importFrom ggplot2 geom_errorbar
 #' @importFrom ggplot2 facet_wrap
 #' @importFrom ggplot2 element_text
+#' @importFrom ggplot2 geom_violin
+#' @importFrom ggplot2 geom_jitter
 #' 
 #' @export
 #' @examples 
@@ -217,8 +219,8 @@ plot_alpha_violin = function(physeq, x="samples", color=NULL, shape=NULL, title=
     # Make the ggplot.
     # # Scale maximum width proportional to sample size (scale = "count").
     p = ggplot(mdf, richness_map) + 
-        geom_violin(aes_string(fill = x), scale = "count", draw_quantiles = c(0.25, 0.5, 0.75), na.rm=TRUE) + 
-        geom_jitter(height = 0.1, width = 0.2)
+        ggplot2::geom_violin(aes_string(fill = x), scale = "count", draw_quantiles = c(0.25, 0.5, 0.75), na.rm=TRUE) + 
+        ggplot2::geom_jitter(height = 0.1, width = 0.2)
     # Add error bars if mdf$se is not all NA
     # if( any(!is.na(mdf[, "se"])) ){
     #     p = p + geom_errorbar(aes(ymax=value + se, ymin=value - se), width=0.1) 

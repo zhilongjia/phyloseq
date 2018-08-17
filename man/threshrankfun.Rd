@@ -24,10 +24,10 @@ This is useful for higher-order functions that require a single-argument functio
 like \code{\link{transform_sample_counts}}.
 }
 \examples{
-data(esophagus)
-x1 = transform_sample_counts(esophagus, threshrankfun(50))
+data(GlobalPatterns)
+x1 = transform_sample_counts(GlobalPatterns, threshrankfun(50))
 otu_table(x1)
-x2 = transform_sample_counts(esophagus, rank)
+x2 = transform_sample_counts(GlobalPatterns, rank)
 otu_table(x2)
 identical(x1, x2)
 }

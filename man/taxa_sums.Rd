@@ -4,10 +4,12 @@
 \alias{taxa_sums}
 \title{Returns the total number of individuals observed from each species/taxa/OTU.}
 \usage{
-taxa_sums(x)
+taxa_sums(x, rankby="rowname")
 }
 \arguments{
 \item{x}{\code{\link{otu_table-class}}, or \code{\link{phyloseq-class}}.}
+
+\item{rankby}{rowname (default) or one of rank_names(x)}
 }
 \value{
 A \code{\link{numeric-class}} with length equal to the number of species
@@ -20,9 +22,7 @@ the orientation of the otu_table is automatically handled.
 }
 \examples{
 data(enterotype)
-taxa_sums(enterotype)
-data(esophagus)
-taxa_sums(esophagus)
+head(taxa_sums(enterotype))
 }
 \seealso{
 \code{\link{sample_sums}}, \code{\link{rowSums}}, \code{\link{colSums}}

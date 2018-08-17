@@ -5,8 +5,8 @@
 \title{General ordination plotter based on ggplot2.}
 \usage{
 plot_ordination(physeq, ordination, type = "samples", axes = 1:2,
-  color = NULL, shape = NULL, label = NULL, title = NULL,
-  justDF = FALSE)
+  dotsize = 3, color = NULL, shape = NULL, label = NULL, title = NULL,
+  cbPalette = NULL, justDF = FALSE)
 }
 \arguments{
 \item{physeq}{(Required). \code{\link{phyloseq-class}}. 
@@ -43,6 +43,8 @@ naming the index name or index of the desired axis for the horizontal
 and vertical axes, respectively, in that order. The default value, 
 \code{c(1, 2)}, specifies the first two axes of the provided ordination.}
 
+\item{dotsize}{default 2}
+
 \item{color}{(Optional). Default \code{NULL}. Character string.
  The name of the variable to map to
  colors in the plot. 
@@ -72,6 +74,8 @@ Similar to \code{color} option, but for plotting text.}
 
 \item{title}{(Optional). Default \code{NULL}. Character string.
 The main title for the graphic.}
+
+\item{cbPalette}{default NULL.}
 
 \item{justDF}{(Optional). Default \code{FALSE}. Logical.
 Instead of returning a ggplot2-object, do you just want the relevant

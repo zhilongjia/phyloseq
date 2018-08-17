@@ -27,8 +27,8 @@ Create a ggplot summary of gap statistic results
 }
 \examples{
 # Load and process data
-data("soilrep")
-soilr = rarefy_even_depth(soilrep, rngseed=888)
+data("GlobalPatterns")
+soilr = rarefy_even_depth(GlobalPatterns, rngseed=888)
 print(soilr)
 sample_variables(soilr)
 # Ordination

@@ -56,11 +56,11 @@ Credit: the \code{phylo}-class version is adapted from
 \href{http://cran.at.r-project.org/web/packages/picante/index.html}{prune.sample}.
 }
 \examples{
-data("esophagus")
-esophagus
-plot(sort(taxa_sums(esophagus), TRUE), type="h", ylim=c(0, 50))
-x1 = prune_taxa(taxa_sums(esophagus) > 10, esophagus) 
-x2 = prune_taxa(names(sort(taxa_sums(esophagus), TRUE))[1:9], esophagus) 
+data("GlobalPatterns")
+GlobalPatterns
+plot(sort(taxa_sums(GlobalPatterns), TRUE), type="h", ylim=c(0, 50))
+x1 = prune_taxa(taxa_sums(GlobalPatterns) > 10, GlobalPatterns) 
+x2 = prune_taxa(names(sort(taxa_sums(GlobalPatterns), TRUE))[1:9], GlobalPatterns) 
 identical(x1, x2)
 }
 \seealso{
