@@ -1598,6 +1598,10 @@ psmelt = function(physeq){
 #'
 #' @param title (Optional). Default \code{NULL}. Character string.
 #'  The main title for the graphic.
+#'  
+#'  @param groupMean FALSE or TRUE
+#'  @param position stack or dodge
+#'  @param font_size default 12.
 #'
 #' @return A \code{\link[ggplot2]{ggplot}}2 graphic object -- rendered in the graphical device
 #'  as the default \code{\link[base]{print}}/\code{\link[methods]{show}} method.
@@ -1616,6 +1620,8 @@ psmelt = function(physeq){
 #' @importFrom ggplot2 geom_bar
 #' @importFrom ggplot2 facet_grid
 #' @importFrom ggplot2 element_text
+#' @importFrom dplyr group_by_ summarise
+#' @importFrom magrittr %>%
 #' 
 #' @export
 #'
@@ -1627,21 +1633,40 @@ psmelt = function(physeq){
 #' plot_bar(gp.ch, x="SampleType", fill="Genus")
 #' plot_bar(gp.ch, "SampleType", fill="Genus", facet_grid=~Family)
 #' # See additional examples in the plot_bar online tutorial. Link above.
+#' 
 plot_bar = function(physeq, x="Sample", y="Abundance", fill=NULL,
-	title=NULL, facet_grid=NULL){
+	title=NULL, facet_grid=NULL, groupMean=FALSE, position="stack",
+	font_size=12){
 		
 	# Start by melting the data in the "standard" way using psmelt.
 	mdf = psmelt(physeq)
+	
+	if (groupMean) {
+	    
+	    mdf <- dplyr::group_by_(mdf, fill, x) %>%  
+	        dplyr::summarise(mean(!!sym(y), na.rm=TRUE) )
+	    colnames(mdf)[3] <- y
+	    # mdf2 <- aggregate(get(y)~get(fill)+get(x), data=mdf, mean)
+	    # colnames(mdf2) <- c(fill, x, y)
+	}
 	
 	# Build the plot data structure
 	p = ggplot(mdf, aes_string(x=x, y=y, fill=fill))
 
 	# Add the bar geometric object. Creates a basic graphic. Basis for the rest.
 	# Test weather additional
-	p = p + geom_bar(stat="identity", position="stack", color="black")
+	if (position=="stack") {
+	    p = p + geom_bar(stat="identity", position=position, color="black")
+	} else if (position=="dodge") {
+	    p = p + geom_bar(stat="identity", position=position, color="black")
+	}
+	
 
 	# By default, rotate the x-axis labels (they might be long)
-	p = p + theme(axis.text.x=element_text(angle=-90, hjust=0))
+	p = p + theme(text = element_text(size=font_size), 
+	              axis.text.x=element_text(angle=-90, hjust=0)) 
+	# +
+	#     theme_grey(base_size = 18) 
 
 	# Add faceting, if given
 	if( !is.null(facet_grid) ){	
