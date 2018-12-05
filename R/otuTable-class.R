@@ -136,6 +136,7 @@ taxa_sums <- function(x, rankby="rowname"){
             res <- rowSums(x_otutab)
         }
     }
+    res <- res[which(names(res) != "" & !is.na(names(res) ) )]
     return (res)
     
 }
